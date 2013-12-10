@@ -1,2 +1,4 @@
-project
+target
+project/target
+.lib
 target-standalone

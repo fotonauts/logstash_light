@@ -17,7 +17,7 @@ We installed the usual setup on one of our admin servers (load average: 8.0 !), 
 
 Then we patched another logger in our infrastructure, the one responsible for sending all the HAProxy logs to our analysis infrastructure. But then something wrong happened: all the logs were flooding in normally, then, suddenly, no more logs from the HAProxy for a while, then it started again, then it broke again...
 
-Turns out the Logstash instance was not fast enough to process all the data coming in from the internet and was taking too much time to answer requests from the log producer. The log producer then decided to stop feeding the logstash for a while and resumed again moments later, with the same scenario.
+Turns out the Logstash instance was not fast enough to process all the data coming in from the internet and was taking too much time to answer its requests from the log producer. The log producer then decided to stop feeding the logstash for a while and resumed again moments later, with the same scenario.
 
 On the CPU side, the logstash was using more than 100% of CPU, but still delivered some data to the ES.
 
@@ -96,6 +96,16 @@ Actually, all versions but the JRuby one perform with the same performance on ou
 And they run perfectly on our admin instance! This is victory.
 
 We gladly share the code with you, so that you can experiment and maybe reuse it in context where Logstash might be too big/hungry for what you plan to do.
+
+Use cases
+==
+
+Well, you can use logstash_simple:
+- for research/tuning purposes,
+- lightweight **replacement** of Logstash,
+
+In our infrastructure, Logstash was not a solution, unless we were ready to dedicate a server to the Logstash instance. Logstash_light will provide the same service at a fraction
+of the CPU time needed by Logstash.
 
 Environment Variable Support
 ==

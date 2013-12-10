@@ -1,0 +1,26 @@
+{
+  "name": "broussetache",
+  "version": "0.0.1",
+  "description": "Read from redis, pushes in Elasticseach.",
+  "main": "broussetache.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "redis",
+    "elasticsearch"
+  ],
+  "author": "Pierre Baillet",
+  "license": "BSD",
+  "dependencies": {
+    "redis": "~0.9.1",
+    "hiredis": "~0.1.15",
+    "strftime": "~0.7.0",
+    "elasticsearchclient": "~0.5.3"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-nodemon": "~0.1.2"
+  }
+}

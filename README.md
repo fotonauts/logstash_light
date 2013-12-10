@@ -23,7 +23,7 @@ On the CPU side, the logstash was using more than 100% of CPU, but still deliver
 
 As suggested in the doc, I decided to add a Redis instance between the app servers and the ElasticSearch to buffer the requests and hopefully provide a better scalability. While I was there, I rewrote the Rails and Haproxy logger to write directly the data in Redis so that I could keep a single Logstash instance on my administration server. My logstash would then only play the role of an electronic pipe applying a very simple processing to the incoming stream.
 
-To be "conservative", the Rails application would trim the Redis list to 10000 elements and no more. Nobody wanted the redis to run out of memory and 10000 seemed a fair choice of queue length.
+To be "conservative", the Rails application would trim the Redis list to 10k elements and no more. Nobody wanted the redis to run out of memory and 10k seemed a fair choice of queue length.
 
 The following configuration was then setup for logstash:
 
@@ -55,7 +55,7 @@ input {
   }
 ```
 
-And off, we started everything. Soon, the Redis queue started growing. And growing. And topped 10000 elements. Logstash started reading the data in Redis.
+And off, we started everything. Soon, the Redis queue started growing. And growing. And topped 10,000 elements. Logstash started reading the data in Redis.
 
 But the queue remained full.
 
@@ -69,7 +69,7 @@ We tweaked the logstash instance in everyway possible:
 
 But no visible result.
 
-My wonderful colleague, kali, even ran YourKit on Logstash to see if something was going wrong, without any obvious result (between the JRuby internals and the number of ElasticSearch threads, it is quite difficult to see what's happening inside the animal).
+My wonderful colleague, kali, even ran YourKit on Logstash to see if something was going wrong, without any obvious result (between the JRuby internals and the number of ElasticSearch threads, it is quite difficult to see what is happening inside the animal).
 
 Finally, we setup a **dedicated** new box, with its own ElasticSearch instance and Logstash instance. Things got better, but still, the Logstash was not able to empty the Redis as a reasonnable pace.
 
@@ -87,11 +87,11 @@ We now have 3 versions performing the same thing:
 Why 3 versions?
 ---
 
-- The scala version was written because this is the the language we use at Fotopedia for performance-critical tasks
-- The node.js version was written during the week-end (after all, javascript and JSON are natural friends),
-- The ruby version was written to see how Ruby and JRuby actually performed with this simplified version.
+- the scala version was written because this is the language we use at Fotopedia for performance-critical tasks,
+- the node.js version was written during the weekend (after all, javascript and JSON are natural friends),
+- the ruby version was written to see how Ruby and JRuby actually performed with this simplified version.
 
-Actually, all but JRuby version perform with the same performance on our current logging speed. Both the node.js and scala version were tested up to almost 10k event/s without saturating the Redis queue.
+Actually, all versions but the JRuby one perform with the same performance on our current logging speed. Both the node.js and scala version were tested up to almost 10k event/s without saturating the Redis queue.
 
 And they run perfectly on our admin instance! This is victory.
 

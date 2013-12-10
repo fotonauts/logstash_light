@@ -9,7 +9,7 @@ Recently, we decided to switch from MongoDB to ElasticSearch for our primary log
 
 ![This is kibana !](kibana.jpg)
 
-Kibana is a very nice frontend for ElasticSearch, developped with [Logstash](http://logstash.net/docs/1.2.2/) data in mind. Basically, you generated logs with your applications (via syslog, log files, whatever) and Logstash will read all these sources and pipe them into ElasticSearch. Please go and read [Logstash](http://logstash.net/docs/1.2.2/) documentation if you want to know more about that. This is an impressive piece of software.
+Kibana is a very nice frontend for ElasticSearch, developped with [Logstash](http://logstash.net/docs/1.2.2/) data in mind. Basically, you generate logs with your applications (via syslog, log files, whatever) and Logstash will read all these sources and pipe them into ElasticSearch. Please go and read [Logstash](http://logstash.net/docs/1.2.2/) documentation if you want to know more about that. This is an impressive piece of software.
 
 [Kibana](http://www.elasticsearch.org/overview/kibana/) has the same awesomeness inside. It plugs on any ElasticSearch server, can dig its indices almost automatically and is very fun to use. Also, it doesn't need an application server to run and does all the magic inside your browser!
 
@@ -28,7 +28,7 @@ To be "conservative", the Rails application would trim the Redis list to 10000 e
 The following configuration was then setup for logstash:
 
 
-``` 
+```
 input {
     redis {
       data_type => "list"
@@ -146,6 +146,7 @@ And then start it:
 ```
 REDIS_HOST=server.net ES_HOST=server.net ES_PORT=9201 ruby logstash_light.rb
 ```
+
 
 That's all for now! Please do not hesitate to contact us if you have any question or remark about that!
 
